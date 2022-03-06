@@ -16,7 +16,7 @@ GEM
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     minitest (5.15.0)
-    rake (10.5.0)
+    rake (13.0.6)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
 
@@ -28,7 +28,7 @@ DEPENDENCIES
   bundler (~> 2.3.7)
   literal_enums!
   minitest (~> 5.0)
-  rake (~> 10.0)
+  rake (~> 13.0)
 
 BUNDLED WITH
    2.3.7
