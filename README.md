@@ -90,50 +90,50 @@ It is also possible to define a more complex state machine by defining `transiti
 
 ```ruby
 class State < Enum
-  Unprocessed do
+  Pending do
     def transitions_to
-      [Validated, Errored]
+      [Approved, Rejected]
     end
   end
 
-  Validated do
+  Approved do
     def transitions_to
-      [Published, Errored]
+      Published
     end
   end
 
-  Published do
+  Rejected do
     def transitions_to
-      [Processed, Errored]
+      Deleted
     end
   end
 
-  Processed()
-  Errored()
+  Deleted()
+  Published()
 end
 ```
 
 Given the above definition, we can transition from one state to another by calling `transition_to` with the newly desired state. This will raise a `LiteralEnums::TransitionError` if the transition is invalid.
 
 ```ruby
-State::Unprocessed.transition_to(State::Validated) # returns State::Validated.
-State::Unprocessed.transition_to(State::Processed) # raises a LiteralEnums::TransitionError.
+State::Pending.transition_to(State::Approved) # returns State::Approved.
+State::Pending.transition_to(State::Published) # raises a LiteralEnums::TransitionError.
 ```
 
 Alternatively, we can call the new state as a method on the old state.
 
 ```ruby
-State::Unprocessed.validated # returns State::Validated.
+State::Pending.approved # returns State::Approved.
 ```
 
-An invalid transition will return a `NoMethodErorr` in this case as the method is not defined.
+An invalid transition would return a `NoMethodErorr` in this case as the method is not defined.
 
 The advantage of using method calls to transition from one state to anotehr is the method calls can be chained.
 
 ```ruby
-State::Unprocessed.validated.processed # returns State::Processed, since it's valid to
-                                       # move to State::Processed from State::Validated and it's
-                                       # valid to move to State::Validated from State::Unprocessed.
+State::Pending.approved.published # returns State::Published, since it's valid to
+                                  # move to State::Published from State::Approved and it's
+                                  # valid to move to State::Approved from State::Pending.
 ```
 
 ## Installation
