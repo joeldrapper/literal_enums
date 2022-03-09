@@ -1,22 +1,6 @@
-# LiteralEnums
+# literal_enums
 
 Literal Enums makes Enumerations first-class citizens in Ruby, providing a literal definition syntax.
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem "literal_enums"
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install literal_enums
 
 ## Usage
 
@@ -151,6 +135,22 @@ State::Unprocessed.validated.processed # returns State::Processed, since it's va
                                        # move to State::Processed from State::Validated and it's
                                        # valid to move to State::Validated from State::Unprocessed.
 ```
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem "literal_enums"
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install literal_enums
 
 ### Rails
 

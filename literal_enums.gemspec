@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joel Drapper"]
   spec.email         = ["joel@drapper.me"]
 
-  spec.summary       = "Literal Enums"
-  spec.description   = "Literal Enum syntax for Ruby."
+  spec.summary       = "Literal Enums syntax for Ruby"
+  spec.description   = "A comprehensive Enum library for Ruby with literal-style syntax."
   spec.homepage      = "https://github.com/joeldrapper/literal_enums"
   spec.license       = "MIT"
 
