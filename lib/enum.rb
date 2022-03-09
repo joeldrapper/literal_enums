@@ -1,4 +1,5 @@
 class Enum
+  extend Enumerable
   include LiteralEnums::Transitions
 
   attr_reader :name, :value
@@ -22,7 +23,7 @@ class Enum
     end
 
     def values
-      members.map(&:value).to_set
+      map(&:value).to_set
     end
 
     def each(&block)
