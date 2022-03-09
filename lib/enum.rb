@@ -4,7 +4,6 @@ class Enum
 
   attr_reader :name, :value
 
-  alias_method :to_s, :value
   alias_method :inspect, :name
 
   def initialize(name, value)
