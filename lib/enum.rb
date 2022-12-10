@@ -18,34 +18,38 @@ class Enum
     end
 
     def cast(value)
-      members.find { |v| v.value == value.to_s }
+      @values[value]
     end
 
     def values
-      map(&:value).to_set
+      map(&:value)
     end
 
     def each(&block)
-      members.each(&block)
+      @members.each(&block) if defined?(@members)
     end
 
     def members
-      constants.map { |c| const_get(c) }.to_set
+      return @members if defined?(@members)
+      @members = []
     end
 
     private
 
     def new(name, value = nil, &block)
       if self == Enum
-        raise ArgumentError, "You can't add values to the abstract Enum class itself."
+        raise ArgumentError,
+          "You can't add values to the abstract Enum class itself."
       end
 
-      if constants.include?(name)
-        raise ArgumentError, "Name conflict: '#{self.name}::#{name}' is already defined."
+      if const_defined?(name)
+        raise ArgumentError,
+          "Name conflict: '#{self.name}::#{name}' is already defined."
       end
 
       if values.include?(value)
-        raise ArgumentError, "Value conflict: the value '#{value}' is defined for '#{self.cast(value).name}'."
+        raise ArgumentError,
+          "Value conflict: the value '#{value}' is defined for '#{self.cast(value).name}'."
       end
 
       member = super(name, value)
@@ -57,7 +61,11 @@ class Enum
         end
       RUBY
 
-      const_set(name, member.freeze)
+      member.freeze
+
+      const_set(name, member)
+      (@members ||= []) << member
+      (@values ||= {})[value] = member
     end
   end
 end
