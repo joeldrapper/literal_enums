@@ -20,7 +20,7 @@ Here we’ve enumerated `Color::Red`, `Color::Green`, and `Color::Blue` constant
 Color::Red.is_a?(Color) # returns true
 ```
 
-Enum classes have synthetic methods for looking up their members. `Color.members` will return a `Set` of members of the `Color` enumeration: `Color::Red`, `Color::Green`, and `Color::Blue`.
+Enum classes have synthetic methods for looking up their members. `Color.members` will return an `Array` of members of the `Color` enumeration: `Color::Red`, `Color::Green`, and `Color::Blue`.
 
 Members also have polymorphic predicate methods for each member of the enumeration in lower-snake-case.
 
@@ -46,7 +46,7 @@ end
 Then we can look up all the values.
 
 ```ruby
-Color.values # returns a Set of "ff0000", "00ff00", "0000f".
+Color.values # returns an Array of ["ff0000", "00ff00", "0000f"].
 ```
 
 We can also look at the value for any member directly.
