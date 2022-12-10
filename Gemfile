@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-
-# Specify your gem's dependencies in literal_enums.gemspec
 gemspec
+
+gem "rake"
+gem "minitest"
+gem "benchmark-ips"
