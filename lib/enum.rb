@@ -41,7 +41,18 @@ class Enum
 
     private
 
-    def new(name, value = name, &block)
+    def new(name, a = nil, b = nil, &block)
+
+      # If only one positional argument is provided and it's a proc, treat it as the transitions_to definition. Otherwise, the first argument is the value and the second argument is the transitions_to definition.
+
+      if !b && Proc === a
+        transitions_to = a
+        value = name
+      else
+        value = a || name
+        transitions_to = b
+      end
+
       if self == Enum
         raise ArgumentError,
           "You can't add values to the abstract Enum class itself."
@@ -65,6 +76,7 @@ class Enum
 
       member = super(name, value)
       member.instance_eval(&block) if block_given?
+      member.define_singleton_method(:transitions_to, transitions_to) if transitions_to
       member.freeze
 
       const_set(name, member)
