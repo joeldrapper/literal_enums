@@ -40,19 +40,19 @@ class EnumTest < Minitest::Test
   end
 
   def test_values
-    assert_equal Color.values, Set.new([
+    assert_equal Color.values, [
       "ff0000",
       "00ff00",
       "0000ff"
-    ])
+    ]
   end
 
   def test_members
-    assert_equal Color.members, Set.new([
+    assert_equal Color.members, [
       Color::Red,
       Color::Green,
       Color::Blue
-    ])
+    ]
   end
 
   def test_singleton_definition
@@ -84,7 +84,7 @@ class EnumTest < Minitest::Test
 
   def test_predicate
     assert Color::Red.red?
-    
+
     refute Color::Red.green?
     refute Color::Red.blue?
   end

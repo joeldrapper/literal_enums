@@ -6,6 +6,7 @@ require "literal_enums/transitions"
 require "enum"
 
 module LiteralEnums
-  class Error < StandardError; end
-  class TransitionError < Error; end
+  Error = Module.new
+  StandardError = Class.new(StandardError) { include Error }
+  TransitionError = Class.new(StandardError) { include Error }
 end
