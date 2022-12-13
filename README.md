@@ -8,9 +8,9 @@ You can define an enum by subclassing `Enum` and using the literal syntax.
 
 ```ruby
 class Color < Enum
-  Red()
-  Green()
-  Blue()
+  Red
+  Green
+  Blue
 end
 ```
 
@@ -90,50 +90,20 @@ It is also possible to define a more complex state machine by defining `transiti
 
 ```ruby
 class State < Enum
-  Pending do
-    def transitions_to
-      [Approved, Rejected]
-    end
-  end
+  Pending -> { [Approved, Rejected] }
+  Approved -> { Published }
+  Rejected -> { Deleted }
 
-  Approved do
-    def transitions_to
-      Published
-    end
-  end
-
-  Rejected do
-    def transitions_to
-      Deleted
-    end
-  end
-
-  Deleted()
-  Published()
+  Deleted
+  Published
 end
 ```
 
-Given the above definition, we can transition from one state to another by calling `transition_to` with the newly desired state. This will raise a `LiteralEnums::TransitionError` if the transition is invalid.
+Given the above definition, we can transition from one state to another by calling `>>` with the newly desired state. This will raise a `LiteralEnums::TransitionError` if the transition is invalid.
 
 ```ruby
-State::Pending.transition_to(State::Approved) # returns State::Approved.
-State::Pending.transition_to(State::Published) # raises a LiteralEnums::TransitionError.
-```
-
-Alternatively, we can call the new state as a method on the old state.
-
-```ruby
-State::Pending.approved # returns State::Approved.
-```
-
-An invalid transition would return a `NoMethodErorr` in this case as the method is not defined.
-
-The advantage of using method calls to transition from one state to anotehr is the method calls can be chained.
-
-```ruby
-State::Pending.approved.published # returns State::Published, since it's valid to
-                                  # move to State::Published from State::Approved and it's
-                                  # valid to move to State::Approved from State::Pending.
+State::Pending >> State::Approved # returns State::Approved.
+State::Pending >> State::Published # raises a LiteralEnums::TransitionError.
 ```
 
 ## Installation

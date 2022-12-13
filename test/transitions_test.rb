@@ -7,11 +7,10 @@ class TransitionsTest < Minitest::Test
     PendingReview -> { [Approved, Rejected] }
     Approved -> { Published }
 
-    Rejected()
-    Published()
-    Deleted()
+    Rejected
+    Published
+    Deleted
   end
-
 
   def test_transition_to_transitions_to_valid_state
     assert_equal State::Draft >> State::PendingReview >> State::Approved, State::Approved

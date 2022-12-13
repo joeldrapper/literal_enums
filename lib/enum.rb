@@ -13,16 +13,30 @@ class Enum
   end
 
   class << self
-    attr_accessor :members
+    attr_reader :members
 
     def inherited(child)
+      TracePoint.new(:end) do |tp|
+        if tp.self == child
+          tp.self.freeze
+          tp.disable
+        end
+      end.enable
+
       child.instance_eval do
         @values = {}
         @members = []
       end
     end
 
+    def const_missing(name)
+      return super if frozen?
+      return super unless name[0] =~ /[A-Z]/
+      new(name)
+    end
+
     def method_missing(name, *args, **kwargs, &block)
+      return super if frozen?
       return super unless name[0] =~ /[A-Z]/
       new(name, *args, **kwargs, &block)
     end
