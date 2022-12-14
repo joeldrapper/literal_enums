@@ -31,7 +31,6 @@ class Enum
 
     def const_missing(name)
       return super if frozen?
-      return super unless name[0] =~ /[A-Z]/
       new(name)
     end
 
