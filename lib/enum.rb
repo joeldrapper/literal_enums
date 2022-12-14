@@ -7,7 +7,7 @@ class Enum
   alias_method :inspect, :name
 
   def initialize(name, value)
-    @short_name = name.to_s.underscore
+    @short_name = name.to_s.gsub(/([a-z])([A-Z])/, '\1_\2').downcase!
     @name = "#{self.class.name}::#{name}"
     @value = value
   end
@@ -83,8 +83,8 @@ class Enum
       end
 
       class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
-        def #{name.to_s.underscore}?
-          @short_name == "#{name.to_s.underscore}"
+        def #{name.to_s.gsub(/([a-z])([A-Z])/, '\1_\2').downcase!}?
+          @short_name == "#{name.to_s.gsub(/([a-z])([A-Z])/, '\1_\2').downcase!}"
         end
       RUBY
 

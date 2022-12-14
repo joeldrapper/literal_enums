@@ -9,6 +9,7 @@ class EnumTest < Minitest::Test
 
   class Status < Enum
     Draft
+    PendingReview
     Published
   end
 
@@ -54,36 +55,36 @@ class EnumTest < Minitest::Test
   end
 
   def test_name
-    assert_equal Color::Red.name, "EnumTest::Color::Red"
-    assert_equal Color::Green.name, "EnumTest::Color::Green"
-    assert_equal Color::Blue.name, "EnumTest::Color::Blue"
+    assert_equal "EnumTest::Color::Red", Color::Red.name
+    assert_equal "EnumTest::Color::Green", Color::Green.name
+    assert_equal "EnumTest::Color::Blue", Color::Blue.name
   end
 
   def test_cast
-    assert_equal Color.cast("ff0000"), Color::Red
-    assert_equal Color.cast("00ff00"), Color::Green
-    assert_equal Color.cast("0000ff"), Color::Blue
+    assert_equal Color::Red, Color.cast("ff0000")
+    assert_equal Color::Green, Color.cast("00ff00")
+    assert_equal Color::Blue, Color.cast("0000ff")
   end
 
   def test_values
-    assert_equal Color.values, [
+    assert_equal [
       "ff0000",
       "00ff00",
       "0000ff"
-    ]
+    ], Color.values
   end
 
   def test_members
-    assert_equal Color.members, [
+    assert_equal [
       Color::Red,
       Color::Green,
       Color::Blue
-    ]
+    ], Color.members
   end
 
   def test_singleton_definition
-    assert_equal Switch::On.toggle, Switch::Off
-    assert_equal Switch::Off.toggle, Switch::On
+    assert_equal Switch::Off, Switch::On.toggle
+    assert_equal Switch::On, Switch::Off.toggle
   end
 
   def test_disallows_duplicate_names
@@ -104,14 +105,9 @@ class EnumTest < Minitest::Test
     assert_equal "Value conflict: the value 'ff0000' is defined for 'EnumTest::Color::Red'.", error.message
   end
 
-  def test_only_accepts_capitalised_defintions
-    assert_raises(NoMethodError) { Color.purple("800080") }
-  end
-
   def test_predicate
-    assert Color::Red.red?
+    assert Status::PendingReview.pending_review?
 
-    refute Color::Red.green?
-    refute Color::Red.blue?
+    refute Status::Draft.pending_review?
   end
 end
