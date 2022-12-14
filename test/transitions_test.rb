@@ -13,7 +13,7 @@ class TransitionsTest < Minitest::Test
   end
 
   def test_transition_to_transitions_to_valid_state
-    assert_equal State::Draft >> State::PendingReview >> State::Approved, State::Approved
+    assert_equal State::Approved, (State::Draft >> State::PendingReview >> State::Approved)
   end
 
   def test_transition_to_raises_transition_error_for_invalid_states
@@ -21,7 +21,7 @@ class TransitionsTest < Minitest::Test
       State::Draft >> State::Published
     end
 
-    assert_equal error.message, "You can't transition from TransitionsTest::State::Draft to TransitionsTest::State::Published."
+    assert_equal "You can't transition from TransitionsTest::State::Draft to TransitionsTest::State::Published.", error.message
   end
 
   def test_transitions_to_predicate
