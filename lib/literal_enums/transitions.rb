@@ -1,6 +1,6 @@
 module LiteralEnums
   module Transitions
-    def transition_to(new_state)
+    def >>(new_state)
       return self if new_state == self
 
       if transitions_to?(new_state)
@@ -10,8 +10,6 @@ module LiteralEnums
           "You can't transition from #{self.name} to #{new_state.name}."
       end
     end
-
-    alias_method :>>, :transition_to
 
     def transitions_to?(new_state)
       possible_states = transitions_to
