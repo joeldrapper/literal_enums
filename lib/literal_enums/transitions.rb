@@ -1,6 +1,8 @@
 module LiteralEnums
   module Transitions
     def transition_to(new_state)
+      return self if new_state == self
+
       if transitions_to?(new_state)
         new_state
       else
