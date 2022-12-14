@@ -12,11 +12,15 @@ class TransitionsTest < Minitest::Test
     Deleted
   end
 
-  def test_transition_to_transitions_to_valid_state
+  def test_transition_to_valid_state
     assert_equal State::Approved, (State::Draft >> State::PendingReview >> State::Approved)
   end
 
-  def test_transition_to_raises_transition_error_for_invalid_states
+  def test_transition_to_self
+    assert_equal State::Approved, (State::Approved >> State::Approved)
+  end
+
+  def test_transition_to_invalid_states
     error = assert_raises(LiteralEnums::TransitionError) do
       State::Draft >> State::Published
     end
