@@ -1,3 +1,5 @@
+This documentation is for Literal Enums 2.0 which has not yet been released. You can see documentaiton for Literal Enums 1 [here](https://github.com/joeldrapper/literal_enums/tree/d49eeba40f01f24c6b26d4dcdc6abb0da28e9ccb#readme).
+
 # literal_enums
 
 Literal Enums makes Enumerations first-class citizens in Ruby, providing a literal definition syntax.
