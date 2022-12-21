@@ -88,7 +88,7 @@ Switch::Off.toggle # returns Switch::On
 
 ### State machine
 
-It is also possible to define a more complex state machine by defining `transitions_to` methods on member singletons.
+It is also possible to define a more complex state machine by passing a stabby lambda returning the next valid state or an `Array` of valid next states.
 
 ```ruby
 class State < Enum
@@ -101,7 +101,7 @@ class State < Enum
 end
 ```
 
-Given the above definition, we can transition from one state to another by calling `>>` with the newly desired state. This will raise a `LiteralEnums::TransitionError` if the transition is invalid.
+We can transition from one state to another by calling `>>` on one state with the new state. This will raise a `LiteralEnums::TransitionError` if the transition is invalid.
 
 ```ruby
 State::Pending >> State::Approved # returns State::Approved.
