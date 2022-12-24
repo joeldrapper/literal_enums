@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
-gem "rake"
-gem "minitest"
 gem "benchmark-ips"
+gem "minitest"
+gem "rake"
+gem "rubocop"
