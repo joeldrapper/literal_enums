@@ -8,4 +8,4 @@
 /tmp/
 Gemfile.lock
 .DS_Store
-.rubocop*
+.rubocop-*

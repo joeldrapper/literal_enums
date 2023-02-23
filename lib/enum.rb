@@ -44,6 +44,12 @@ class Enum
 			new(name, *args, **kwargs, &block)
 		end
 
+		def respond_to_missing?(name)
+			return super if frozen?
+
+			name[0] =~ /[A-Z]/
+		end
+
 		def cast(value)
 			@values[value]
 		end
@@ -56,7 +62,7 @@ class Enum
 			@members.each(&block)
 		end
 
-			private
+		private
 
 		def new(name, a = nil, b = nil, &block)
 			# If only one positional argument is provided and it's a proc, treat it as the transitions_to definition. Otherwise, the first argument is the value and the second argument is the transitions_to definition.
@@ -71,24 +77,24 @@ class Enum
 
 			if self == Enum
 				raise ArgumentError,
-										"You can't add values to the abstract Enum class itself."
+					"You can't add values to the abstract Enum class itself."
 			end
 
 			if const_defined?(name)
 				raise ArgumentError,
-										"Name conflict: '#{self.name}::#{name}' is already defined."
+					"Name conflict: '#{self.name}::#{name}' is already defined."
 			end
 
 			if @values[value]
 				raise ArgumentError,
-										"Value conflict: the value '#{value}' is defined for '#{cast(value).name}'."
+					"Value conflict: the value '#{value}' is defined for '#{cast(value).name}'."
 			end
 
 			class_eval(<<-RUBY, __FILE__, __LINE__ + 1)
         def #{name.to_s.gsub(/([a-z])([A-Z])/, '\1_\2').downcase!}?
           @short_name == "#{name.to_s.gsub(/([a-z])([A-Z])/, '\1_\2').downcase!}"
         end
-						RUBY
+			RUBY
 
 			member = super(name, value)
 			member.instance_eval(&block) if block_given?
@@ -99,5 +105,5 @@ class Enum
 			@members << member
 			@values[value] = member
 		end
-		end
+	end
 end

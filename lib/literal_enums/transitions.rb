@@ -9,7 +9,7 @@ module LiteralEnums
 				other
 			else
 				raise TransitionError,
-										"You can't transition from #{name} to #{other.name}."
+					"You can't transition from #{name} to #{other.name}."
 			end
 		end
 
